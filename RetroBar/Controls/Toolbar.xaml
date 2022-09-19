@@ -15,7 +15,7 @@
                   dd:DragDrop.DragDropContext="Toolbar">
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-                <WrapPanel Orientation="Horizontal"></WrapPanel>
+                <WrapPanel Orientation="Horizontal" VerticalAlignment="Center"></WrapPanel>
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
         <ItemsControl.ItemTemplate>
