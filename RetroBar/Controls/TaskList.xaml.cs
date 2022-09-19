@@ -16,15 +16,23 @@ namespace RetroBar.Controls
         private bool isScrollable;
         private double DefaultButtonWidth;
         private double MinButtonWidth;
+        private double DefaultButtonHeight;
         private double TaskButtonLeftMargin;
         private double TaskButtonRightMargin;
         
         public static DependencyProperty ButtonWidthProperty = DependencyProperty.Register("ButtonWidth", typeof(double), typeof(TaskList), new PropertyMetadata(new double()));
+        public static DependencyProperty ButtonHeightProperty = DependencyProperty.Register("ButtonHeight", typeof(double), typeof(TaskList), new PropertyMetadata(new double()));
 
         public double ButtonWidth
         {
             get { return (double)GetValue(ButtonWidthProperty); }
             set { SetValue(ButtonWidthProperty, value); }
+        }
+
+        public double ButtonHeight
+        {
+            get { return (double)GetValue(ButtonHeightProperty); }
+            set { SetValue(ButtonHeightProperty, value); }
         }
 
         public static DependencyProperty TasksProperty = DependencyProperty.Register("Tasks", typeof(Tasks), typeof(TaskList));
@@ -44,6 +52,9 @@ namespace RetroBar.Controls
         {
             DefaultButtonWidth = Application.Current.FindResource("TaskButtonWidth") as double? ?? 0;
             MinButtonWidth = Application.Current.FindResource("TaskButtonMinWidth") as double? ?? 0;
+            
+            DefaultButtonHeight = Application.Current.FindResource("TaskButtonHeight") as double? ?? 0;
+            
             Thickness buttonMargin;
 
             if (Settings.Instance.Edge == (int)AppBarEdge.Left || Settings.Instance.Edge == (int)AppBarEdge.Right)
@@ -81,22 +92,25 @@ namespace RetroBar.Controls
 
         private void GroupedWindows_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            SetTaskButtonWidth();
+            SetTaskButtonSize();
         }
 
         private void TaskList_OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            SetTaskButtonWidth();
+            SetTaskButtonSize();
         }
 
-        private void SetTaskButtonWidth()
+        private void SetTaskButtonSize()
         {
             if (Settings.Instance.Edge == (int)AppBarEdge.Left || Settings.Instance.Edge == (int)AppBarEdge.Right)
             {
                 ButtonWidth = ActualWidth;
+                ButtonHeight = DefaultButtonHeight;
                 SetScrollable(true); // while technically not always scrollable, we don't run into DPI-specific issues with it enabled while vertical
                 return;
             }
+
+            ButtonHeight = DefaultButtonHeight;
 
             double margin = TaskButtonLeftMargin + TaskButtonRightMargin;
             double maxWidth = TasksList.ActualWidth / TasksList.Items.Count;

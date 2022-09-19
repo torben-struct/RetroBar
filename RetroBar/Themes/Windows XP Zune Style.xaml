@@ -6,6 +6,8 @@
         <ResourceDictionary Source="Windows XP Royale.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <system:Double x:Key="TaskbarHeight">50</system:Double>
+    <system:Double x:Key="TaskButtonHeight">44</system:Double>
     <Thickness x:Key="TaskButtonMargin" Right="2" />
     <system:Boolean x:Key="InvertSystemNotifyIcons">False</system:Boolean>
 
