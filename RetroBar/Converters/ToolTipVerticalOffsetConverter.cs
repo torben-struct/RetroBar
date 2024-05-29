@@ -18,11 +18,11 @@ namespace RetroBar.Converters
                 return double.NaN;
             }
 
-            if (Settings.Instance.Edge == (int)AppBarEdge.Left || Settings.Instance.Edge == (int)AppBarEdge.Right)
+            if (Settings.Instance.Edge == AppBarEdge.Left || Settings.Instance.Edge == AppBarEdge.Right)
             {
                 double placementTargetHeight = (double)values[0];
                 double toolTipHeight = (double)values[1];
-                return (placementTargetHeight / 2.0) - (toolTipHeight / 2.0);
+                return (placementTargetHeight / 2.0) - (toolTipHeight / 2.0 / (double)values[2]);
             }
             else
             {

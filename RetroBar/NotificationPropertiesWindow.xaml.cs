@@ -1,6 +1,8 @@
 ﻿using ManagedShell.WindowsTray;
+using RetroBar.Extensions;
 using RetroBar.Utilities;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace RetroBar
 {
@@ -20,6 +22,17 @@ namespace RetroBar
             InitializeComponent();
 
             DataContext = _notificationArea;
+            Settings.Instance.PropertyChanged += Settings_PropertyChanged;
+        }
+
+        private void Settings_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(Settings.InvertNotifyIcons) || e.PropertyName == nameof(Settings.NotifyIconBehaviors))
+            {
+                // Reload icons
+                DataContext = null;
+                DataContext = _notificationArea;
+            }
         }
 
         public static void Open(NotificationArea notificationArea, Point position)
@@ -44,12 +57,65 @@ namespace RetroBar
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            Settings.Instance.PropertyChanged -= Settings_PropertyChanged;
             _instance = null;
         }
 
-        private void BehaviorComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void BehaviorComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Settings.Instance.PinnedNotifyIcons = _notificationArea.PinnedNotifyIcons;
+            if (e.AddedItems.Count > 0 && 
+                (sender as FrameworkElement).DataContext is NotifyIcon notifyIcon && 
+                e.AddedItems[0] is ComboBoxItem selected && 
+                selected.Tag is NotifyIconBehavior behavior)
+            {
+                if (notifyIcon.GetBehavior() == behavior)
+                {
+                    // Same setting selected; do nothing
+                    return;
+                }
+
+                notifyIcon.SetBehavior(behavior);
+            }
+        }
+
+        private void InvertCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            var checkBox = sender as CheckBox;
+            var icon = checkBox.DataContext as NotifyIcon;
+            icon.SetCanInvert(true);
+        }
+
+        private void InvertCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            var checkBox = sender as CheckBox;
+            var icon = checkBox.DataContext as NotifyIcon;
+            icon.SetCanInvert(false);
+        }
+
+        private void Icon_Loaded(object sender, RoutedEventArgs e)
+        {
+            var image = sender as Image;
+            var notifyIcon = image.DataContext as NotifyIcon;
+            applyEffects(image, notifyIcon);
+        }
+
+        private void applyEffects(Image NotifyIconImage, NotifyIcon TrayIcon)
+        {
+            if (TrayIcon == null)
+            {
+                return;
+            }
+
+            if (!TrayIcon.CanInvert())
+            {
+                NotifyIconImage.Effect = null;
+                return;
+            }
+
+            if (NotifyIconImage.Effect == null)
+            {
+                NotifyIconImage.Effect = new InvertEffect();
+            }
         }
     }
 }

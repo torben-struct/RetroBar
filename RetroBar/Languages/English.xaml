@@ -23,14 +23,18 @@
     <s:String x:Key="allow_font_smoothing">_Allow font smoothing</s:String>
     <s:String x:Key="collapse_tray_icons">Collapse _notification area icons</s:String>
     <s:String x:Key="customize">_Customize...</s:String>
+    <s:String x:Key="show_input_language">Show the input _language</s:String>
     <s:String x:Key="show_clock">Show the cloc_k</s:String>
     <s:String x:Key="show_multi_mon">Show on _multiple displays</s:String>
     <s:String x:Key="show_quick_launch">Show _Quick Launch</s:String>
     <s:String x:Key="select_location">_Select location...</s:String>
     <s:String x:Key="quick_launch_folder">Quick Launch - Choose a folder</s:String>
+    <s:String x:Key="show_badges">Show _badges</s:String>
     <s:String x:Key="show_window_previews">Show _window previews (thumbnails)</s:String>
     <s:String x:Key="use_software_rendering">_Use software rendering</s:String>
-    <s:String x:Key="middle_mouse_to_close">_Middle-click to close taskbar items</s:String>
+    <s:String x:Key="add_show_desktop_button">Add the Show _Desktop button</s:String>
+    <s:String x:Key="enable_auto_hide">A_uto-hide the taskbar</s:String>
+    <s:String x:Key="lock_taskbar">_Lock the taskbar</s:String>
     <s:String x:Key="multiple_displays">Multiple displays</s:String>
     <s:String x:Key="show_tasks_on">S_how tasks on:</s:String>
     <x:Array x:Key="show_tasks_on_values" Type="s:String">
@@ -38,8 +42,26 @@
         <s:String>Same taskbar as window</s:String>
         <s:String>Same taskbar as window and primary taskbar</s:String>
     </x:Array>
+    <s:String x:Key="invert_system_icons">_Invert system icons:</s:String>
+    <x:Array x:Key="invert_system_icons_values" Type="s:String">
+        <s:String>When needed by theme</s:String>
+        <s:String>Always</s:String>
+        <s:String>Never</s:String>
+    </x:Array>
+    <s:String x:Key="middle_mouse_task_action">_Middle-click action:</s:String>
+    <x:Array x:Key="middle_mouse_task_action_values" Type="s:String">
+        <s:String>Do nothing</s:String>
+        <s:String>Open a new instance</s:String>
+        <s:String>Close the task</s:String>
+    </x:Array>
     <s:String x:Key="version">Version {0}</s:String>
     <s:String x:Key="visit_on_github">Visit RetroBar on GitHub</s:String>
+    <s:String x:Key="taskbar_scale">Taskbar scale</s:String>
+    <s:String x:Key="taskbar_scale_1x">100%</s:String>
+    <s:String x:Key="taskbar_scale_2x">200%</s:String>
+    <s:String x:Key="taskbar_scale_current">Current setting: {0}%</s:String>
+    <s:String x:Key="debug_logging">Enable debug logging</s:String>
+    <s:String x:Key="check_for_updates">Check for updates</s:String>
     <s:String x:Key="ok_dialog">OK</s:String>
 
     <s:String x:Key="customize_notifications">Customize Notifications</s:String>
@@ -47,8 +69,11 @@
     <s:String x:Key="customize_notifications_instruction">Select an item, then choose its notification behavior:</s:String>
     <s:String x:Key="hide_when_inactive">Hide when inactive</s:String>
     <s:String x:Key="always_show">Always show</s:String>
+    <s:String x:Key="always_hide">Always hide</s:String>
+    <s:String x:Key="remove">Remove</s:String>
     <s:String x:Key="name_heading">Name</s:String>
     <s:String x:Key="behavior_heading">Behavior</s:String>
+    <s:String x:Key="invert_heading">Invert</s:String>
 
     <s:String x:Key="start_text">Start</s:String>
     <s:String x:Key="start_text_xp">start</s:String>
@@ -75,6 +100,13 @@
     <s:String x:Key="update_available">_Update available...</s:String>
     <s:String x:Key="exit_retrobar">_Exit RetroBar</s:String>
     <s:String x:Key="customize_notifications_menu">_Customize Notifications...</s:String>
+    <s:String x:Key="lock_taskbar_menu">_Lock the Taskbar</s:String>
+
+    <s:String x:Key="show_desktop_tip_95">Surface/Restore Desktop</s:String>
+    <s:String x:Key="show_desktop_tip">Show Desktop</s:String>
+    <s:String x:Key="show_desktop_95">_Desktop</s:String>
+    <s:String x:Key="show_desktop">_Show Desktop</s:String>
+    <s:String x:Key="peek_at_desktop">_Peek at desktop</s:String>
 
     <s:String x:Key="restore">_Restore</s:String>
     <s:String x:Key="move">_Move</s:String>

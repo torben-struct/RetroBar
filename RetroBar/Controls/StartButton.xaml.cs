@@ -3,6 +3,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Threading;
 using ManagedShell.Common.Helpers;
 using RetroBar.Utilities;
@@ -42,14 +43,13 @@ namespace RetroBar.Controls
             pendingOpenTimer.Tick += (sender, args) =>
             {
                 // if the start menu didn't open, flip the button back to unchecked
-                Start.IsChecked = false;
-                pendingOpenTimer.Stop();
+                SetStartMenuState(false);
             };
         }
 
         private void Settings_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "Theme")
+            if (e.PropertyName == nameof(Settings.Theme))
             {
                 bool useFloatingStartButton = Application.Current.FindResource("UseFloatingStartButton") as bool? ?? false;
 
@@ -65,6 +65,7 @@ namespace RetroBar.Controls
             Dispatcher.Invoke(() =>
             {
                 Start.IsChecked = opened;
+                Host?.SetStartMenuOpen(opened);
             });
             pendingOpenTimer.Stop();
         }
@@ -77,12 +78,13 @@ namespace RetroBar.Controls
                 return;
             }
 
-            Start.IsChecked = false;
+            SetStartMenuState(false);
         }
 
         private void OpenStartMenu()
         {
             Host?.SetTrayHost();
+            Host?.SetStartMenuOpen(true);
             pendingOpenTimer.Start();
             ShellHelper.ShowStartMenu();
         }
@@ -212,12 +214,20 @@ namespace RetroBar.Controls
             PresentationSource source = PresentationSource.FromVisual(this);
             Point buttonPosPoints = source.CompositionTarget.TransformFromDevice.Transform(buttonPosPixels);
 
+            // If the start button is currently translated, we get the translated position
+            // and need to offset by that much to be positioned correctly.
+            if (Host?.AutoHideElement?.RenderTransform is TranslateTransform tt)
+            {
+                buttonPosPoints.X += (tt.X * -1);
+                buttonPosPoints.Y += (tt.Y * -1);
+            }
+
             return buttonPosPoints;
         }
 
         private Size getButtonSize()
         {
-            return new Size(Start.ActualWidth, Start.ActualHeight);
+            return new Size(Start.ActualWidth * Settings.Instance.TaskbarScale, Start.ActualHeight * Settings.Instance.TaskbarScale);
         }
 
         public void UpdateFloatingStartCoordinates()

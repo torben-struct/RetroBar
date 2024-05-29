@@ -56,7 +56,7 @@ namespace RetroBar.Controls
             MinButtonWidth = Application.Current.FindResource("TaskButtonMinWidth") as double? ?? 0;
             Thickness buttonMargin;
 
-            if (Settings.Instance.Edge == (int)AppBarEdge.Left || Settings.Instance.Edge == (int)AppBarEdge.Right)
+            if (Settings.Instance.Edge == AppBarEdge.Left || Settings.Instance.Edge == AppBarEdge.Right)
             {
                 buttonMargin = Application.Current.FindResource("TaskButtonVerticalMargin") as Thickness? ?? new Thickness();
             }
@@ -92,13 +92,13 @@ namespace RetroBar.Controls
 
         private void Settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "MultiMonMode")
+            if (e.PropertyName == nameof(Settings.MultiMonMode))
             {
                 taskbarItems?.Refresh();
             }
-            else if (e.PropertyName == "ShowMultiMon")
+            else if (e.PropertyName == nameof(Settings.ShowMultiMon))
             {
-                if (Settings.Instance.MultiMonMode != 0)
+                if (Settings.Instance.MultiMonMode != MultiMonOption.AllTaskbars)
                 {
                     taskbarItems?.Refresh();
                 }
@@ -114,12 +114,17 @@ namespace RetroBar.Controls
                     return false;
                 }
 
-                if (!Settings.Instance.ShowMultiMon || Settings.Instance.MultiMonMode == 0)
+                if (!Settings.Instance.ShowMultiMon || Settings.Instance.MultiMonMode == MultiMonOption.AllTaskbars)
                 {
                     return true;
                 }
 
-                if (Settings.Instance.MultiMonMode == 2 && Host.Screen.Primary)
+                if (Settings.Instance.MultiMonMode == MultiMonOption.SameAsWindowAndPrimary && Host.Screen.Primary)
+                {
+                    return true;
+                }
+
+                if (Host.Screen.Primary && !Host.windowManager.IsValidHMonitor(window.HMonitor))
                 {
                     return true;
                 }
@@ -154,7 +159,7 @@ namespace RetroBar.Controls
 
         private void SetTaskButtonWidth()
         {
-            if (Settings.Instance.Edge == (int)AppBarEdge.Left || Settings.Instance.Edge == (int)AppBarEdge.Right)
+            if (Settings.Instance.Edge == AppBarEdge.Left || Settings.Instance.Edge == AppBarEdge.Right)
             {
                 ButtonWidth = ActualWidth;
                 SetScrollable(true); // while technically not always scrollable, we don't run into DPI-specific issues with it enabled while vertical

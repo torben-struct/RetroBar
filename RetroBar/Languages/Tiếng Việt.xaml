@@ -4,6 +4,7 @@
 
     <s:String x:Key="retrobar_properties">Tinh chỉnh RetroBar</s:String>
     <s:String x:Key="taskbar_tab">Thanh tác vụ</s:String>
+    <s:String x:Key="advanced_tab">Nâng cao</s:String>
     <s:String x:Key="taskbar_appearance">Giao diện thanh tác vụ</s:String>
     <s:String x:Key="notification_area">Khu vực thông báo</s:String>
     <s:String x:Key="autostart">Tự động khởi động khi đăng nhập</s:String>
@@ -28,7 +29,10 @@
     <s:String x:Key="select_location">Chọn vị trí...</s:String>
     <s:String x:Key="quick_launch_folder">Truy cập nhanh - Chọn một thư mục</s:String>
     <s:String x:Key="show_window_previews">Hiện hình xem trước các _cửa sổ (ảnh thu nhỏ)</s:String>
-    <s:String x:Key="use_software_rendering">_Sử dụng phần mềm để kết xuất</s:String>
+    <s:String x:Key="use_software_rendering">_Sử dụng phần mềm để kết xuất (Software Rendering)</s:String>
+    <s:String x:Key="add_show_desktop_button">Thêm nút Hiện bàn làm việc (Show Desktop)</s:String>
+    <s:String x:Key="enable_auto_hide">Tự động ẩn thanh tác vụ</s:String>
+    <s:String x:Key="lock_taskbar">_Khoá thanh tác vụ</s:String>
     <s:String x:Key="multiple_displays">Đa màn hình</s:String>
     <s:String x:Key="show_tasks_on">_Hiện các tác vụ trên:</s:String>
     <x:Array x:Key="show_tasks_on_values" Type="s:String">
@@ -36,12 +40,23 @@
         <s:String>Thanh tác vụ cùng cửa sổ</s:String>
         <s:String>Thanh tác vụ cùng cửa sổ và thanh tác vụ chính</s:String>
     </x:Array>
+    <s:String x:Key="invert_system_icons">_Đảo ngược màu các biểu tượng thông báo: </s:String>
+    <x:Array x:Key="invert_system_icons_values" Type="s:String">
+        <s:String>Theo chủ đề</s:String>
+        <s:String>Luôn luôn</s:String>
+        <s:String>Không bao giờ</s:String>
+    </x:Array>
     <s:String x:Key="version">Phiên bản {0}</s:String>
-    <s:String x:Key="visit_on_github">Xem trên GitHub</s:String>
+    <s:String x:Key="visit_on_github">RetroBar trên GitHub</s:String>
+    <s:String x:Key="taskbar_scale">Phóng lớn thanh tác vụ</s:String>
+    <s:String x:Key="taskbar_scale_1x">100%</s:String>
+    <s:String x:Key="taskbar_scale_2x">200%</s:String>
+    <s:String x:Key="taskbar_scale_current">Cài đặt hiện tại: {0}%</s:String>
+    <s:String x:Key="debug_logging">Kích hoạt ghi nhật ký gỡ lỗi</s:String>
     <s:String x:Key="ok_dialog">OK</s:String>
 
     <s:String x:Key="customize_notifications">Tùy chỉnh thông báo</s:String>
-    <s:String x:Key="customize_notifications_info">RetroBar sẽ hiện các biểu tượng thông báo đang hoạt động hoặc quan trọng, đồng thời ẩn các biểu tượng không cần thiết. Bạn cũng có thể thay đổi hành vi của chúng ở ngay danh sách dưới đây.</s:String>
+    <s:String x:Key="customize_notifications_info">RetroBar sẽ hiện các biểu tượng thông báo đang hoạt động hoặc quan trọng, đồng thời ẩn các biểu tượng không cần thiết. Bạn cũng có thể thay đổi hành vi của chúng trong danh sách dưới đây.</s:String>
     <s:String x:Key="customize_notifications_instruction">Chọn một mục nào đó, rồi chọn hành vi thông báo cho mục đó:</s:String>
     <s:String x:Key="hide_when_inactive">Ẩn nếu không hoạt động</s:String>
     <s:String x:Key="always_show">Luôn luôn hiện</s:String>
@@ -59,12 +74,27 @@
     <s:String x:Key="quick_launch">_Truy cập nhanh</s:String>
     <s:String x:Key="new_toolbar">_Tạo thanh công cụ...</s:String>
     <s:String x:Key="set_time">_Thay đổi Ngày/Giờ</s:String>
+    <s:String x:Key="cascade">Xếp chồng các cửa sổ</s:String>
+    <s:String x:Key="horiz_tile">Chia các cửa sổ theo chiều ngang</s:String>
+    <s:String x:Key="vert_tile">Chia các cửa sổ theo chiều dọc</s:String>
+    <s:String x:Key="toggle_desktop">_Hiện bàn làm việc</s:String>
+    <s:String x:Key="hide_desktop">Hiện các cửa sổ đang mở</s:String>
+    <s:String x:Key="undo_cascade">Hoàn tác xếp chồng</s:String>
+    <s:String x:Key="undo_tile">Hoàn tác chia cửa sổ</s:String>
+    <s:String x:Key="undo_minimize_all">Hoàn tác thu nhỏ tất cả</s:String>
     <s:String x:Key="show_taskman_2k">Trình quản lý tác vụ...</s:String>
     <s:String x:Key="show_taskman">Trình quản lý tác vụ</s:String>
     <s:String x:Key="tray_properties">Tinh chỉnh</s:String>
     <s:String x:Key="update_available">_Có bản cập nhật mới...</s:String>
     <s:String x:Key="exit_retrobar">_Thoát RetroBar</s:String>
     <s:String x:Key="customize_notifications_menu">_Tùy chỉnh thông báo...</s:String>
+    <s:String x:Key="lock_taskbar_menu">_Khoá thanh tác vụ</s:String>
+
+    <s:String x:Key="show_desktop_tip_95">Khôi phục bàn làm việc</s:String>
+    <s:String x:Key="show_desktop_tip">Hiện bàn làm việc</s:String>
+    <s:String x:Key="show_desktop_95">_Bàn làm việc</s:String>
+    <s:String x:Key="show_desktop">_Hiện bàn làm việc</s:String>
+    <s:String x:Key="peek_at_desktop">_Xem nhanh bàn làm việc</s:String>
 
     <s:String x:Key="restore">_Khôi phục</s:String>
     <s:String x:Key="move">_Di chuyển</s:String>

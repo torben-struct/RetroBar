@@ -11,6 +11,7 @@ using ManagedShell.Common.Enums;
 using System.Diagnostics;
 using System.Reflection;
 using ManagedShell.Common.Logging;
+using System.Linq;
 
 namespace RetroBar
 {
@@ -70,7 +71,7 @@ namespace RetroBar
 
         private void Settings_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "UseSoftwareRendering")
+            if (e.PropertyName == nameof(Settings.UseSoftwareRendering))
             {
                 if (Settings.Instance.UseSoftwareRendering)
                 {
@@ -81,7 +82,7 @@ namespace RetroBar
                     RenderOptions.ProcessRenderMode = RenderMode.Default;
                 }
             }
-            else if (e.PropertyName == "Theme")
+            else if (e.PropertyName == nameof(Settings.Theme) || e.PropertyName == nameof(Settings.TaskbarScale))
             {
                 setTaskIconSize();
             }
@@ -95,7 +96,7 @@ namespace RetroBar
 
         private void setTaskIconSize()
         {
-            bool useLargeIcons = FindResource("UseLargeIcons") as bool? ?? false;
+            bool useLargeIcons = Settings.Instance.TaskbarScale > 1 || (FindResource("UseLargeIcons") as bool? ?? false);
 
             if (_shellManager.TasksService.TaskIconSize != IconSize.Small != useLargeIcons)
             {
@@ -110,7 +111,7 @@ namespace RetroBar
             _logger = new ManagedShellLogger();
 
             ShellConfig config = ShellManager.DefaultShellConfig;
-            config.PinnedNotifyIcons = Settings.Instance.PinnedNotifyIcons;
+            config.PinnedNotifyIcons = Settings.Instance.NotifyIconBehaviors.Where(setting => setting.Behavior == NotifyIconBehavior.AlwaysShow).Select(setting => setting.Identifier).ToArray();
 
             return new ShellManager(config);
         }
