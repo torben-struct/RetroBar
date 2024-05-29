@@ -178,11 +178,11 @@ namespace RetroBar.Controls
         {
             if (e.ChangedButton == MouseButton.Middle)
             {
-                if (Window == null)
+                if (Window == null || Settings.Instance.TaskMiddleClickAction == TaskMiddleClickOption.DoNothing)
                 {
                     return;
                 }
-                if (Settings.Instance.MiddleMouseToClose)
+                if (Settings.Instance.TaskMiddleClickAction == TaskMiddleClickOption.CloseTask)
                 {
                     Window?.Close();
                 }
@@ -195,7 +195,7 @@ namespace RetroBar.Controls
 
         private void Settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "Theme")
+            if (e.PropertyName == nameof(Settings.Theme))
             {
                 SetStyle();
             }

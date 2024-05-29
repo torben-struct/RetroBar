@@ -62,7 +62,7 @@ namespace RetroBar.Controls
 
         private void Settings_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "QuickLaunchOrder")
+            if (e.PropertyName == nameof(Settings.QuickLaunchOrder))
             {
                 if (_ignoreNextUpdate)
                 {
@@ -70,12 +70,23 @@ namespace RetroBar.Controls
                     return;
                 }
 
-                if (Folder != null)
-                {
-                    ListCollectionView cvs = (ListCollectionView)CollectionViewSource.GetDefaultView(Folder.Files);
-                    cvs.Refresh();
-                }
+                Refresh();
             }
+            else if (e.PropertyName == nameof(Settings.TaskbarScale))
+            {
+                Refresh();
+            }
+        }
+
+        private void Refresh()
+        {
+            if (Folder == null)
+            {
+                return;
+            }
+
+            ListCollectionView cvs = (ListCollectionView)CollectionViewSource.GetDefaultView(Folder.Files);
+            cvs.Refresh();
         }
 
         private void SetupFolder(string path)

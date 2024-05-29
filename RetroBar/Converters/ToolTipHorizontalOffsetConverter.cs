@@ -18,7 +18,7 @@ namespace RetroBar.Converters
                 return double.NaN;
             }
 
-            if (Settings.Instance.Edge == (int)AppBarEdge.Left || Settings.Instance.Edge == (int)AppBarEdge.Right)
+            if (Settings.Instance.Edge == AppBarEdge.Left || Settings.Instance.Edge == AppBarEdge.Right)
             {
                 return (double)0;
             }
@@ -26,7 +26,7 @@ namespace RetroBar.Converters
             {
                 double placementTargetWidth = (double)values[0];
                 double toolTipWidth = (double)values[1];
-                return (placementTargetWidth / 2.0) - (toolTipWidth / 2.0);
+                return (placementTargetWidth / 2.0) - (toolTipWidth / 2.0 / (double)values[2]);
             }
         }
 

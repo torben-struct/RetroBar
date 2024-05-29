@@ -6,6 +6,7 @@ using System.Windows.Input;
 using ManagedShell.Common.Helpers;
 using ManagedShell.Interop;
 using ManagedShell.WindowsTray;
+using RetroBar.Extensions;
 using RetroBar.Utilities;
 
 namespace RetroBar.Controls
@@ -33,33 +34,25 @@ namespace RetroBar.Controls
 
         private void applyEffects()
         {
-            if (!EnvironmentHelper.IsWindows10OrBetter || TrayIcon == null)
+            if (TrayIcon == null || Settings.Instance.InvertIconsMode == InvertIconsOption.Never)
             {
                 return;
             }
 
-            string iconGuid = TrayIcon.GUID.ToString();
-
-            if (!(iconGuid == NotificationArea.HARDWARE_GUID ||
-                iconGuid == NotificationArea.UPDATE_GUID ||
-                iconGuid == NotificationArea.MICROPHONE_GUID ||
-                iconGuid == NotificationArea.LOCATION_GUID ||
-                iconGuid == NotificationArea.MEETNOW_GUID ||
-                iconGuid == NotificationArea.NETWORK_GUID ||
-                iconGuid == NotificationArea.POWER_GUID ||
-                iconGuid == NotificationArea.VOLUME_GUID))
+            if (!TrayIcon.CanInvert())
             {
                 return;
             }
 
             bool invertByTheme = Application.Current.FindResource("InvertSystemNotifyIcons") as bool? ?? false;
+            bool performInvert = invertByTheme || Settings.Instance.InvertIconsMode == InvertIconsOption.Always;
 
-            if (NotifyIconImage.Effect == null != invertByTheme)
+            if (NotifyIconImage.Effect == null != performInvert)
             {
                 return;
             }
 
-            if (invertByTheme)
+            if (performInvert)
             {
                 NotifyIconImage.Effect = new InvertEffect();
             }
@@ -109,6 +102,11 @@ namespace RetroBar.Controls
         private void TrayIcon_NotificationBalloonShown(object sender, NotificationBalloonEventArgs e)
         {
             if (Host == null || !Host.Screen.Primary)
+            {
+                return;
+            }
+
+            if (TrayIcon == null || TrayIcon.GetBehavior() == NotifyIconBehavior.AlwaysHide || TrayIcon.GetBehavior() == NotifyIconBehavior.Remove)
             {
                 return;
             }

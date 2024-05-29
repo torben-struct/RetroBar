@@ -317,6 +317,15 @@
     <SolidColorBrush x:Key="TaskListScrollDownButtonBottomBorder" Color="Transparent" />
     <SolidColorBrush x:Key="TaskListScrollArrow" Color="#ffffff" />
 
+    <LinearGradientBrush x:Key="ToolbarThumbForeground"
+                         StartPoint="0.8,0.8"
+                         EndPoint="0.3,0.3">
+        <GradientStop Color="#ffffff"
+                      Offset="0.0" />
+        <GradientStop Color="#aa000000"
+                      Offset="1.0" />
+    </LinearGradientBrush>
+
     <DropShadowEffect x:Key="ForegroundShadow"
                       Color="#000000"
                       BlurRadius="8"
@@ -328,6 +337,8 @@
     <SolidColorBrush x:Key="ButtonPressedForeground" Color="#ffffff" />
     <SolidColorBrush x:Key="ButtonFlashingForeground" Color="#ffffff" />
     <SolidColorBrush x:Key="ClockForeground" Color="#ffffff" />
+    <SolidColorBrush x:Key="InputLanguageForeground" Color="#ffffff" />
+    <SolidColorBrush x:Key="InputLanguageBackground" Color="Transparent" />
 
     <SolidColorBrush x:Key="ToolTipBackground" Color="#f4f4f4" />
     <SolidColorBrush x:Key="ToolTipForeground" Color="#00025c" />
@@ -378,6 +389,10 @@
 
     <BitmapImage x:Key="StartButtonImage"
                  UriSource="../Resources/startlhaerobutton.png" />
+    <BitmapImage x:Key="ShowDesktopIconImageSmall"
+                 UriSource="../Resources/desktopxp-sm.png" />
+    <BitmapImage x:Key="ShowDesktopIconImageLarge"
+                 UriSource="../Resources/desktopxp-lg.png" />
 
     <Style TargetType="MenuItem"
            x:Key="TaskManMenuItem">
@@ -1171,6 +1186,13 @@
                 Value="0,0,2,1" />
     </Style>
 
+    <Style TargetType="Image"
+           x:Key="TaskOverlayIcon"
+           BasedOn="{StaticResource TaskOverlayIcon}">
+        <Setter Property="Margin"
+                Value="0,0,1,0" />
+    </Style>
+
     <Style TargetType="TextBlock"
            x:Key="TaskLabel"
            BasedOn="{StaticResource TaskLabel}">
@@ -1180,6 +1202,13 @@
                 Value="{StaticResource ForegroundShadow}" />
     </Style>
 
+    <Style TargetType="TextBlock"
+           x:Key="InputLanguage"
+           BasedOn="{StaticResource InputLanguage}">
+        <Setter Property="Effect"
+                Value="{StaticResource ForegroundShadow}" />
+    </Style>
+    
     <Style TargetType="TextBlock"
            x:Key="Clock"
            BasedOn="{StaticResource Clock}">
@@ -1337,6 +1366,93 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style TargetType="Thumb"
+           x:Key="ToolbarThumb"
+           BasedOn="{StaticResource ToolbarThumb}">
+        <Setter Property="Height"
+                Value="Auto" />
+        <Setter Property="Margin"
+                Value="4,6,0,4" />
+        <Setter Property="Width"
+                Value="6" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border Background="Transparent"
+                            SnapsToDevicePixels="True">
+                        <Rectangle x:Name="ThumbRect">
+                            <Rectangle.Fill>
+                                <DrawingBrush Viewport="0,0,6,6"
+                                              ViewportUnits="Absolute"
+                                              Viewbox="0,0,6,6"
+                                              ViewboxUnits="Absolute"
+                                              TileMode="Tile">
+                                    <DrawingBrush.Drawing>
+                                        <DrawingGroup>
+                                            <GeometryDrawing Brush="{DynamicResource ToolbarThumbForeground}">
+                                                <GeometryDrawing.Geometry>
+                                                    <EllipseGeometry Center="1.5,1.5" RadiusX="1.5" RadiusY="1.5" />
+                                                </GeometryDrawing.Geometry>
+                                            </GeometryDrawing>
+                                            <GeometryDrawing Brush="{DynamicResource ToolbarThumbForeground}">
+                                                <GeometryDrawing.Geometry>
+                                                    <EllipseGeometry Center="4.5,4.5" RadiusX="1.5" RadiusY="1.5" />
+                                                </GeometryDrawing.Geometry>
+                                            </GeometryDrawing>
+                                        </DrawingGroup>
+                                    </DrawingBrush.Drawing>
+                                </DrawingBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=Orientation}"
+                                     Value="Vertical">
+                            <DataTrigger.Setters>
+                                <Setter Property="Height"
+                                        Value="6" />
+                                <Setter Property="Width"
+                                        Value="Auto" />
+                                <Setter TargetName="ThumbRect"
+                                        Property="Fill">
+                                    <Setter.Value>
+                                        <DrawingBrush Viewport="0,0,6,6"
+                                                      ViewportUnits="Absolute"
+                                                      Viewbox="0,0,6,6"
+                                                      ViewboxUnits="Absolute"
+                                                      TileMode="Tile">
+                                            <DrawingBrush.Drawing>
+                                                <DrawingGroup>
+                                                    <GeometryDrawing Brush="{DynamicResource ToolbarThumbForeground}">
+                                                        <GeometryDrawing.Geometry>
+                                                            <EllipseGeometry Center="1.5,4.5" RadiusX="1.5" RadiusY="1.5" />
+                                                        </GeometryDrawing.Geometry>
+                                                    </GeometryDrawing>
+                                                    <GeometryDrawing Brush="{DynamicResource ToolbarThumbForeground}">
+                                                        <GeometryDrawing.Geometry>
+                                                            <EllipseGeometry Center="4.5,1.5" RadiusX="1.5" RadiusY="1.5" />
+                                                        </GeometryDrawing.Geometry>
+                                                    </GeometryDrawing>
+                                                </DrawingGroup>
+                                            </DrawingBrush.Drawing>
+                                        </DrawingBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger.Setters>
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=Orientation, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
+                         Value="Vertical">
+                <Setter Property="Margin"
+                        Value="5,3,6,1" />
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="TaskListScrollButtonGrid"
@@ -1537,6 +1653,122 @@
                 </DataTrigger.Setters>
             </DataTrigger>
         </Style.Triggers>
+    </Style>
+
+    <Style TargetType="ToggleButton"
+           x:Key="ShowDesktopButton">
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="HorizontalAlignment"
+                Value="Stretch" />
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border BorderThickness="1,0,0,0"
+                            BorderBrush="{DynamicResource TaskListScrollButtonOuterLeftBorder}"
+                            x:Name="ButtonOuterLeftBorder">
+                        <Border BorderThickness="0,0,0,0"
+                                BorderBrush="{DynamicResource TaskListScrollButtonOuterRightBorder}"
+                                x:Name="ButtonOuterRightBorder">
+                            <Border BorderThickness="0,0,0,0"
+                                    BorderBrush="{DynamicResource TaskListScrollButtonOuterBottomBorder}"
+                                    x:Name="ButtonOuterBottomBorder">
+                                <Border BorderThickness="0,0,0,0"
+                                        BorderBrush="{DynamicResource TaskListScrollButtonBottomBorder}"
+                                        x:Name="ButtonBottomBorder">
+                                    <Border BorderThickness="1,0,0,0"
+                                            BorderBrush="{DynamicResource TaskListScrollButtonLeftBorder}"
+                                            x:Name="ButtonLeftBorder">
+                                        <Border BorderThickness="0,0,0,0"
+                                                BorderBrush="{DynamicResource TaskListScrollButtonRightBorder}"
+                                                x:Name="ButtonRightBorder">
+                                            <Border BorderThickness="0,1,0,0"
+                                                    BorderBrush="{DynamicResource TaskListScrollButtonTopBorder}"
+                                                    Background="{DynamicResource TaskListScrollButtonBackground}"
+                                                    x:Name="ButtonTopBorder">
+                                                <Border BorderThickness="0,0,0,1"
+                                                        BorderBrush="{DynamicResource TaskListScrollButtonInnerBottomBorder}"
+                                                        x:Name="ButtonInnerBottomBorder">
+                                                    <Border BorderThickness="1,0,0,0"
+                                                            BorderBrush="{DynamicResource TaskListScrollButtonInnerLeftBorder}"
+                                                            x:Name="ButtonInnerLeftBorder">
+                                                        <Border BorderThickness="0,0,1,0"
+                                                                BorderBrush="{DynamicResource TaskListScrollButtonInnerRightBorder}"
+                                                                x:Name="ButtonInnerRightBorder">
+                                                            <ContentPresenter HorizontalAlignment="Center"
+                                                                              VerticalAlignment="Center"
+                                                                              Margin="5,1,3,0"
+                                                                              x:Name="Content" />
+                                                        </Border>
+                                                    </Border>
+                                                </Border>
+                                            </Border>
+                                        </Border>
+                                    </Border>
+                                </Border>
+                            </Border>
+                        </Border>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="ButtonTopBorder"
+                                    Property="Background"
+                                    Value="{DynamicResource TaskListScrollButtonBackgroundHover}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked"
+                                 Value="True">
+                            <Setter TargetName="ButtonTopBorder"
+                                    Property="Background"
+                                    Value="{DynamicResource TaskListScrollButtonBackgroundPressed}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed"
+                                 Value="True">
+                            <Setter TargetName="ButtonTopBorder"
+                                    Property="Background"
+                                    Value="{DynamicResource TaskListScrollButtonBackgroundPressed}" />
+                        </Trigger>
+                        <DataTrigger Binding="{Binding Path=Orientation, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
+                                     Value="Vertical">
+                            <DataTrigger.Setters>
+                                <Setter TargetName="ButtonLeftBorder"
+                                        Property="BorderThickness"
+                                        Value="0,0,0,0" />
+                                <Setter TargetName="ButtonTopBorder"
+                                        Property="BorderThickness"
+                                        Value="1,0,0,0" />
+                                <Setter TargetName="ButtonRightBorder"
+                                        Property="BorderThickness"
+                                        Value="0,1,0,0" />
+                                <Setter TargetName="ButtonBottomBorder"
+                                        Property="BorderThickness"
+                                        Value="0,0,0,0" />
+                                <Setter TargetName="ButtonInnerLeftBorder"
+                                        Property="BorderThickness"
+                                        Value="0,0,0,1" />
+                                <Setter TargetName="ButtonInnerRightBorder"
+                                        Property="BorderThickness"
+                                        Value="0,1,0,0" />
+                                <Setter TargetName="ButtonInnerBottomBorder"
+                                        Property="BorderThickness"
+                                        Value="0,0,1,0" />
+                                <Setter TargetName="ButtonOuterLeftBorder"
+                                        Property="BorderThickness"
+                                        Value="0,0,0,0" />
+                                <Setter TargetName="ButtonOuterRightBorder"
+                                        Property="BorderThickness"
+                                        Value="0,1,0,0" />
+                                <Setter TargetName="ButtonOuterBottomBorder"
+                                        Property="BorderThickness"
+                                        Value="0,0,0,0" />
+                            </DataTrigger.Setters>
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style TargetType="Button"

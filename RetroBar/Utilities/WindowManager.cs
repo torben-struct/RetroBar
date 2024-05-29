@@ -33,7 +33,7 @@ namespace RetroBar.Utilities
 
         private void Settings_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "ShowMultiMon")
+            if (e.PropertyName == nameof(Settings.ShowMultiMon))
             {
                 // Update screen state in case it has changed since last checked
                 _screenState = AppBarScreen.FromAllScreens();
@@ -90,6 +90,19 @@ namespace RetroBar.Utilities
             ShellLogger.Debug($"WindowManager: Finished processing display events");
         }
 
+        public bool IsValidHMonitor(IntPtr hMonitor)
+        {
+            foreach(var screen in _screenState)
+            {
+                if (screen.HMonitor == hMonitor)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         private void closeTaskbars()
         {
             ShellLogger.Debug($"WindowManager: Closing all taskbars");
@@ -125,7 +138,7 @@ namespace RetroBar.Utilities
         private void openTaskbar(AppBarScreen screen)
         {
             ShellLogger.Debug($"WindowManager: Opening taskbar on screen {screen.DeviceName}");
-            Taskbar taskbar = new Taskbar(this, _shellManager, _startMenuMonitor, _updater, screen, (AppBarEdge)Settings.Instance.Edge);
+            Taskbar taskbar = new Taskbar(this, _shellManager, _startMenuMonitor, _updater, screen, Settings.Instance.Edge, Settings.Instance.AutoHide ? AppBarMode.AutoHide : AppBarMode.Normal);
             taskbar.Show();
 
             _taskbars.Add(taskbar);
